@@ -21,6 +21,10 @@
     margin: 20px;
 }
 
+.el-color-picker{
+    margin-right: 181px;
+}
+
 .right {
     display: flex;
     flex-direction: column;
@@ -33,4 +37,10 @@
 
 .el-dialog__body {
     padding: 15px 20px !important;
+}
+
+.el-table .cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
