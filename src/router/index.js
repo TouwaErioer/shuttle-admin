@@ -33,6 +33,9 @@ const routes = [
                 component: () => import("@/views/order")
             },
         ]
+    },{
+        path: '/login',
+        component: () => import("@/pages/login")
     }
 ]
 
