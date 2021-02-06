@@ -6,7 +6,7 @@
         </div>
         <div class="user">
             <slot name="search"/>
-            <el-avatar @click.native="exit">user</el-avatar>
+            <el-avatar @click.native="exit">{{getUser}}</el-avatar>
         </div>
     </div>
 </template>
@@ -32,10 +32,6 @@
                     });
                     this.$router.push('/login')
                 }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消退出'
-                    });
                 });
             }
         },
@@ -43,6 +39,10 @@
             getCollapseIcon(){
                 if(this.$store.state.collapse) return 'el-icon-s-unfold'
                 else return 'el-icon-s-fold'
+            },
+            getUser(){
+                const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+                return userInfo.name[0]
             }
         }
     }
