@@ -1,0 +1,36 @@
+.el-table {
+    width: unset !important;
+}
+
+.edge {
+    margin: 0 20px;
+    display: flex;
+}
+
+.insert {
+    margin: 0 10px;
+    display: flex;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    background-color: white;
+    margin: 20px;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.el-input {
+    width: auto !important;
+}
+
+.el-dialog__body {
+    padding: 15px 20px !important;
+}
