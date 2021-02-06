@@ -21,7 +21,7 @@
     margin: 20px;
 }
 
-.el-color-picker{
+.el-color-picker {
     margin-right: 181px;
 }
 
@@ -39,13 +39,13 @@
     padding: 15px 20px !important;
 }
 
-.el-table .cell{
+.el-table .cell {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.color{
+.color {
     width: 50px;
     height: 50px;
     display: flex;
@@ -55,7 +55,7 @@
     justify-content: center;
 }
 
-.suffix{
+.suffix {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,4 +69,8 @@
 
 .input .el-button {
     margin: 10px 0;
+}
+
+.form-item .el-radio {
+    margin-right: 12px;
 }
