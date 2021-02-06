@@ -25,17 +25,17 @@
         },
         methods: {
             login() {
-                if (this.user != null & this.password != null) {
+                if (this.user != null && this.password != null) {
                     login({
                         phone: this.user,
                         name: this.user,
                         password: this.password,
                         expired: 60
                     }).then(res => {
-                        if (res.code == 1) {
-                            localStorage.setItem('token', res.data.token)
-                            localStorage.setItem('userInfo',JSON.stringify(res.data.user))
-                            this.$message.success('登录成功')
+                        if (res.code === 1) {
+                            localStorage.setItem('token', res.data.token);
+                            localStorage.setItem('userInfo',JSON.stringify(res.data.user));
+                            this.$message.success('登录成功');
                             this.$router.push('/')
                         } else this.$message.error('登录失败')
                     })
@@ -72,13 +72,5 @@
     .center {
         margin: 150px;
         text-align: center;
-    }
-
-    .input .el-input {
-        margin: 10px 0;
-    }
-
-    .input .el-button {
-        margin: 10px 0;
     }
 </style>

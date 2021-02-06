@@ -4,9 +4,6 @@
             <div slot="insert" class="insert">
                 <el-button icon="el-icon-plus" @click="dialogFormVisible = true"/>
             </div>
-            <div slot="search" class="edge">
-                <el-input placeholder="请输入服务名称" prefix-icon="el-icon-search" v-model="keyword" @change="search"/>
-            </div>
         </Headers>
         <div class="table">
             <el-table :data="services">
@@ -137,19 +134,19 @@
         methods: {
             getData(pageNo) {
                 findAllService({pageNo: pageNo}).then(res => {
-                    let data = res.data
-                    this.services = data.list
-                    this.total = data.total
+                    let data = res.data;
+                    this.services = data.list;
+                    this.total = data.total;
                 })
             },
             insert() {
                 insertService(this.insertFrom).then(res => {
-                    if (res.code == 1) {
-                        this.$message.success('添加成功')
-                        this.load()
-                    } else this.$message.error('添加失败')
-                })
-                this.dialogFormVisible = false
+                    if (res.code === 1) {
+                        this.$message.success('添加成功');
+                        this.load();
+                    } else this.$message.error('添加失败');
+                });
+                this.dialogFormVisible = false;
             },
             del(row) {
                 const h = this.$createElement;
@@ -166,41 +163,41 @@
                     type: 'warning'
                 }).then(() => {
                         deleteService({'id': row.id}).then(res => {
-                            if (res.code == 1) {
-                                this.$message.success('删除成功')
-                                this.load()
-                            } else this.$message.error('添加失败')
-                        })
+                            if (res.code === 1) {
+                                this.$message.success('删除成功');
+                                this.load();
+                            } else this.$message.error('添加失败');
+                        });
                     }
                 ).catch(() => {
                 });
             },
             update() {
                 updateService(this.updateFrom).then(res => {
-                    if (res.code == 1) {
-                        this.$message.success('更新成功')
-                        this.load()
-                    } else this.$message.error('更新失败')
-                })
-                this.dialogUpdateVisible = false
+                    if (res.code === 1) {
+                        this.$message.success('更新成功');
+                        this.load();
+                    } else this.$message.error('更新失败');
+                });
+                this.dialogUpdateVisible = false;
             },
             search(keyword) {
                 search({'keyword': keyword}).then(res => {
-                    if (res.code == 1) this.services = res.data.list
+                    if (res.code === 1) this.services = res.data.list
                 })
             },
             clickUpdate(row) {
-                this.dialogUpdateVisible = true
-                this.updateFrom.id = row.id
-                this.updateFrom.name = row.name
-                this.updateFrom.color = row.color
-                this.updateFrom.icon = row.icon
+                this.dialogUpdateVisible = true;
+                this.updateFrom.id = row.id;
+                this.updateFrom.name = row.name;
+                this.updateFrom.color = row.color;
+                this.updateFrom.icon = row.icon;
             },
             load() {
-                this.services = this.getData(this.page)
+                this.services = this.getData(this.page);
             },
             currentChange(current) {
-                this.page = current
+                this.page = current;
                 this.services = this.getData({pageNo: current})
             }
         }
@@ -219,11 +216,6 @@
         justify-content: center;
         align-items: center;
         margin: 10px 0;
-    }
-
-    .color{
-        width: 50px;
-        height: 50px;
     }
 
     .suffix{

@@ -46,7 +46,7 @@
                         width="180"
                         align="center">
                     <template slot-scope="scope">
-                        <el-tag v-text="scope.row.admin?'管理员':'用户'" :type="scope.row.admin?'success':''"
+                        <el-tag v-text="scope.row['admin']?'管理员':'用户'" :type="scope.row['admin']?'success':''"
                                 @click="changeAuthority(scope.row)"/>
                     </template>
                 </el-table-column>
@@ -92,7 +92,7 @@
             </el-dialog>
             <el-dialog :visible.sync="dialogUpdateVisible" width="350px" center>
                 <div slot="title">
-                    <span><i class="el-icon-edit"></i> {{'修改用户'}}</span>
+                    <span><i class="el-icon-edit"></i> 修改用户</span>
                 </div>
                 <div class="form-item">
                     <span>电话：</span>
@@ -145,25 +145,24 @@
             }
         },
         created() {
-            this.getData(1)
+            this.getData(1);
         },
         methods: {
             getData(pageNo) {
                 findAll({pageNo: pageNo}).then(res => {
-                    let data = res.data
-                    this.users = data.list
-                    this.total = data.total
+                    let data = res.data;
+                    this.users = data.list;
+                    this.total = data.total;
                 })
             },
             insert() {
                 register(this.userFrom).then(res => {
-                    console.log(this.userFrom)
-                    if (res.code == 1) {
-                        this.$message.success('添加成功')
-                        this.load()
-                    } else this.$message.error('添加失败')
-                })
-                this.dialogFormVisible = false
+                    if (res.code === 1) {
+                        this.$message.success('添加成功');
+                        this.load();
+                    } else this.$message.error('添加失败');
+                });
+                this.dialogFormVisible = false;
             },
             del(row) {
                 const h = this.$createElement;
@@ -180,8 +179,8 @@
                     type: 'warning'
                 }).then(() => {
                         deleteUser({'id': row.id}).then(res => {
-                            if (res.code == 1) {
-                                this.$message.success('删除成功')
+                            if (res.code === 1) {
+                                this.$message.success('删除成功');
                                 this.load()
                             } else this.$message.error('添加失败')
                         })
@@ -192,28 +191,28 @@
             },
             update() {
                 update(this.infoFrom).then(res => {
-                    if (res.code == 1) {
-                        this.$message.success('更新成功')
-                        this.load()
-                    } else this.$message.error('更新失败')
-                })
-                this.dialogUpdateVisible = false
+                    if (res.code === 1) {
+                        this.$message.success('更新成功');
+                        this.load();
+                    } else this.$message.error('更新失败');
+                });
+                this.dialogUpdateVisible = false;
             },
             search(keyword) {
                 search({'keyword': keyword}).then(res => {
-                    if (res.code == 1) this.users = res.data.list
+                    if (res.code === 1) this.users = res.data.list;
                 })
             },
             clickUpdate(row) {
-                this.dialogUpdateVisible = true
-                this.infoFrom.id = row.id
-                this.infoFrom.phone = row.phone
-                this.infoFrom.name = row.name
-                this.infoFrom.address = row.address
+                this.dialogUpdateVisible = true;
+                this.infoFrom.id = row.id;
+                this.infoFrom.phone = row.phone;
+                this.infoFrom.name = row.name;
+                this.infoFrom.address = row.address;
             },
             changeAuthority(row) {
                 const h = this.$createElement;
-                if (!row.admin) {
+                if (!row['admin']) {
                     this.$msgbox({
                         title: '提示',
                         message: h('p', null, [
@@ -226,22 +225,22 @@
                         type: 'warning'
                     }).then(() => {
                         admin({userId:row.id}).then(res => {
-                            if(res.code == 1){
-                                this.$message.success('设置管理员成功')
-                                this.load()
-                            }else this.$message.error('设置管理员失败')
+                            if(res.code === 1){
+                                this.$message.success('设置管理员成功');
+                                this.load();
+                            }else this.$message.error('设置管理员失败');
                         })
                     }).catch(() => {
                     });
                 }
             },
             load() {
-                this.users = this.getData(this.page)
+                this.users = this.getData(this.page);
             },
             currentChange(current) {
-                this.page = current
+                this.page = current;
                 this.users = findAll({pageNo: current}).then(res => {
-                    this.users = res.data.list
+                    this.users = res.data.list;
                 })
             }
         }

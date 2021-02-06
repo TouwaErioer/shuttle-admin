@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import {check} from "@/utils/api/user";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
     {
@@ -39,26 +39,26 @@ const routes = [
         path: '/login',
         component: () => import("@/pages/login")
     }
-]
+];
 
 const router = new VueRouter({
     routes
-})
+});
 
 router.beforeEach((to, from, next) => {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
         if (!token) {
-            if (to.path !== '/login') next({path: '/login'})
+            if (to.path !== '/login') next({path: '/login'});
             else next()
         } else {
             check().then(res => {
-                if (res.code === 1) next()
+                if (res.code === 1) next();
                 else {
-                    localStorage.removeItem('token')
+                    localStorage.removeItem('token');
                     next({path: '/login'})
                 }
             })
         }
     }
-)
+);
 export default router
