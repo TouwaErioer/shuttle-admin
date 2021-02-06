@@ -10,4 +10,5 @@ export default {
 
 <style>
   @import "style/cover.css";
+  @import "style/main.css";
 </style>
