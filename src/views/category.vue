@@ -115,7 +115,6 @@
             getData() {
                 findAllCategory().then(res => {
                     let data = res.data;
-                    console.log(data);
                     this.categories = data;
                 })
             },

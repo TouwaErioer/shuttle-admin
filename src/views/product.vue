@@ -1,13 +1,283 @@
 <template>
-    <p>product</p>
+    <div class="right">
+        <Headers>
+            <div slot="insert" class="insert">
+                <el-button icon="el-icon-plus" @click="dialogFormVisible = true"/>
+            </div>
+        </Headers>
+        <div class="table">
+            <el-table :data="products">
+                <el-table-column
+                        prop="id"
+                        label="id"
+                        align="center">
+                </el-table-column>
+                <el-table-column
+                        prop="name"
+                        label="名称"
+                        align="center">
+                    <template slot-scope="scope">
+                        <el-tag v-text="scope.row.name"/>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        label="图片"
+                        align="center">
+                    <template slot-scope="scope">
+                        <el-image :src="scope.row.image" :previewSrcList="[scope.row.image]" style="width: 100px;height: 100px;"/>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        prop="price"
+                        label="价格"
+                        align="center">
+                </el-table-column>
+                <el-table-column
+                        prop="quantity"
+                        label="数量"
+                        align="center">
+                </el-table-column>
+                <el-table-column
+                        label="评分"
+                        align="center">
+                    <template slot-scope="scope">
+                        <el-rate v-model="scope.row.rate" text-color="#ff9900" show-score disabled/>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        prop="sales"
+                        label="销量"
+                        align="center">
+                </el-table-column>
+                <el-table-column
+                        label="商店"
+                        align="center">
+                    <template slot-scope="scope">
+                        <el-tag v-text="scope.row.store.name"/>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        label="操作"
+                        width="180"
+                        align="center">
+                    <template slot-scope="scope">
+                        <el-button type="warning" size="mini" @click="clickUpdate(scope.row)">修改</el-button>
+                        <el-button type="danger" size="mini" @click="del(scope.row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-pagination layout="prev, pager, next" :total="total" :page-size="9" class="pagination"
+                           @current-change="currentChange"/>
+            <el-dialog :visible.sync="dialogFormVisible" width="350px" center>
+                <div slot="title">
+                    <span><i class="el-icon-plus"></i> 添加产品</span>
+                </div>
+                <div class="form-item">
+                    <span>名称：</span>
+                    <el-input v-model="insertFrom.name" suffix-icon="el-icon-tickets"/>
+                </div>
+                <div class="form-item">
+                    <span>图片：</span>
+                    <el-input v-model="insertFrom.image" suffix-icon="el-icon-picture-outline"/>
+                </div>
+                <div class="form-item">
+                    <span>价格：</span>
+                    <el-input v-model="insertFrom.price" suffix-icon="el-icon-price-tag"/>
+                </div>
+                <div class="form-item">
+                    <span>数量：</span>
+                    <el-input v-model="insertFrom.quantity" suffix-icon="el-icon-coin"/>
+                </div>
+                <div class="form-item">
+                    <span>商店：</span>
+                    <el-select v-model="insertFrom.storeId" placeholder="请选择商店">
+                        <el-option v-for="store in stores" :key="store.id" :label="store.name"
+                                   :value="store.id"/>
+                    </el-select>
+                </div>
+                <div class="form-item">
+                    <el-button size="medium" type="success" @click="insert" plain>添加</el-button>
+                </div>
+            </el-dialog>
+            <el-dialog :visible.sync="dialogUpdateVisible" width="350px" center>
+                <div slot="title">
+                    <span><i class="el-icon-edit"></i> 修改产品</span>
+                </div>
+                <div class="form-item">
+                    <span>名称：</span>
+                    <el-input v-model="updateFrom.name" suffix-icon="el-icon-tickets"/>
+                </div>
+
+                <div class="form-item">
+                    <span>图片：</span>
+                    <el-input v-model="updateFrom.image" suffix-icon="el-icon-tickets"/>
+                </div>
+
+                <div class="form-item">
+                    <span>评分：</span>
+                    <el-input v-model="updateFrom.rate" suffix-icon="el-icon-tickets"/>
+                </div>
+
+                <div class="form-item">
+                    <span>价格：</span>
+                    <el-input v-model="updateFrom.price" suffix-icon="el-icon-price"/>
+                </div>
+
+                <div class="form-item">
+                    <span>数量：</span>
+                    <el-input v-model="updateFrom.quantity" suffix-icon="el-icon-picture-outline"/>
+                </div>
+
+                <div class="form-item">
+                    <span>销量：</span>
+                    <el-input v-model="updateFrom.sales" suffix-icon="el-icon-tickets"/>
+                </div>
+
+                <div class="form-item">
+                    <span>商店：</span>
+                    <el-select v-model="insertFrom.storeId" placeholder="请选择商店">
+                        <el-option v-for="store in stores" :key="store.id" :label="store.name"
+                                   :value="store.id"/>
+                    </el-select>
+                </div>
+
+                <div class="form-item">
+                    <el-button size="medium" type="warning" @click="update" plain>修改</el-button>
+                </div>
+            </el-dialog>
+        </div>
+    </div>
 </template>
 
 <script>
+    import Headers from "@/components/headers";
+    import {findAllProduct, deleteProduct, insertProduct, updateProduct} from "@/utils/api/product";
+    import {findAllStore} from "@/utils/api/store";
+
     export default {
-        name: "product"
+        name: "product",
+        components: {Headers},
+        data() {
+            return {
+                products: [],
+                dialogFormVisible: false,
+                dialogUpdateVisible: false,
+                insertFrom: {
+                    name: '',
+                    image: null,
+                    price: null,
+                    quantity: null,
+                    storeId: null,
+                },
+                updateFrom: {
+                    name: '',
+                    image: null,
+                    price: null,
+                    quantity: null,
+                    rate: null,
+                    sales: null,
+                    storeId: null
+                },
+                total: 0,
+                page: 1,
+                stores: [],
+            }
+        },
+        created() {
+            this.getData(1);
+            this.getStores();
+        },
+        methods: {
+            getData(pageNo) {
+                findAllProduct({pageNo:pageNo}).then(res => {
+                    let data = res.data;
+                    this.products = data.list;
+                })
+            },
+            getStores() {
+                findAllStore({pageNo: 1}).then(res => {
+                    this.stores = res.data.list
+                })
+            },
+            insert() {
+                insertProduct(this.insertFrom).then(res => {
+                    if (res.code === 1) {
+                        this.$message.success('添加成功');
+                        this.load();
+                    } else this.$message.error('添加失败');
+                });
+                this.dialogFormVisible = false;
+            },
+            del(row) {
+                const h = this.$createElement;
+                this.$msgbox({
+                    title: '提示',
+                    message: h('p', null, [
+                        h('span', null, '此操作将永久删除'),
+                        h('span', {style: 'color: #f56c6c'}, row.name),
+                        h('span', null, ', 是否继续?')
+                    ]),
+                    showCancelButton: true,
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                        deleteProduct({'id': row.id}).then(res => {
+                            if (res.code === 1) {
+                                this.$message.success('删除成功');
+                                this.load()
+                            } else this.$message.error('添加失败')
+                        })
+                    }
+                ).catch(() => {
+                });
+            },
+            update() {
+                updateProduct(this.updateFrom).then(res => {
+                    if (res.code === 1) {
+                        this.$message.success('更新成功');
+                        this.load();
+                    } else this.$message.error('更新失败');
+                });
+                this.dialogUpdateVisible = false;
+            },
+            clickUpdate(row) {
+                this.dialogUpdateVisible = true;
+                this.updateFrom.id = row.id;
+                this.updateFrom.name = row.name;
+                this.updateFrom.rate = row.rate;
+                this.updateFrom.image = row.image;
+                this.updateFrom.sales = row.sales;
+                this.updateFrom.price = row.price;
+                this.updateFrom.quantity = row.quantity;
+            },
+            load() {
+                this.products = this.getData(this.page)
+            },
+            currentChange(current) {
+                this.page = current;
+                this.products = this.getData({pageNo: current})
+            },
+        }
     }
 </script>
 
 <style scoped>
 
+    .pagination {
+        display: flex;
+        justify-content: center;
+    }
+
+    .form-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px 0;
+    }
+
+    .color {
+        width: 50px;
+        height: 50px;
+    }
 </style>
