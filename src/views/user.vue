@@ -140,15 +140,16 @@
                     name: '',
                     address: ''
                 },
-                total: 0
+                total: 0,
+                page: 1
             }
         },
         created() {
-            this.getData()
+            this.getData(1)
         },
         methods: {
-            getData() {
-                findAll({pageNo: 1}).then(res => {
+            getData(pageNo) {
+                findAll({pageNo: pageNo}).then(res => {
                     let data = res.data
                     this.users = data.list
                     this.total = data.total
@@ -203,8 +204,6 @@
                     if (res.code == 1) this.users = res.data.list
                 })
             },
-            page() {
-            },
             clickUpdate(row) {
                 this.dialogUpdateVisible = true
                 this.infoFrom.id = row.id
@@ -233,17 +232,14 @@
                             }else this.$message.error('设置管理员失败')
                         })
                     }).catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: '已取消设定'
-                        });
                     });
                 }
             },
             load() {
-                this.users = this.getData()
+                this.users = this.getData(this.page)
             },
             currentChange(current) {
+                this.page = current
                 this.users = findAll({pageNo: current}).then(res => {
                     this.users = res.data.list
                 })

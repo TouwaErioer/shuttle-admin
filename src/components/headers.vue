@@ -25,10 +25,12 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
+                    localStorage.removeItem('token')
                     this.$message({
                         type: 'success',
                         message: '退出成功!'
                     });
+                    this.$router.push('/login')
                 }).catch(() => {
                     this.$message({
                         type: 'info',

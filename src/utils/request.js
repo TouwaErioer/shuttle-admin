@@ -47,14 +47,15 @@ instance.interceptors.response.use(response => {
     // todo code: 1 -> 成功
     //            0 -> 失败
     //           -1 -> 系统错误
-    if (response.data.code === 1) {
-        return Promise.resolve(response.data)
-    }else{
-        Message({
-            message: response.data.message,
-            type: 'error'
-        })
-    }
+    // if (response.data.code === 1) {
+    //     return Promise.resolve(response.data)
+    // }else{
+    //     Message({
+    //         message: response.data.message,
+    //         type: 'error'
+    //     })
+    // }
+    return Promise.resolve(response.data)
 }, error => {
     loadingInstance.close()
     if (error.response) {

@@ -35,6 +35,7 @@
                         if (res.code == 1) {
                             localStorage.setItem('token', res.data.token)
                             this.$message.success('登录成功')
+                            this.$router.push('/')
                         } else this.$message.error('登录失败')
                     })
                 }else{
