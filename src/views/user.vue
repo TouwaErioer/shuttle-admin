@@ -47,7 +47,7 @@
                         align="center">
                     <template slot-scope="scope">
                         <el-tag v-text="scope.row['admin']?'管理员':'用户'" :type="scope.row['admin']?'success':''"
-                                @click="changeAuthority(scope.row)"/>
+                                @click="changeAuthority(scope.row)" effect="dark"/>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -96,18 +96,19 @@
                 </div>
                 <div class="form-item">
                     <span>电话：</span>
-                    <el-input v-model="infoFrom.phone" suffix-icon="el-icon-phone"/>
+                    <el-input v-model="infoFrom.phone" suffix-icon="el-icon-phone" @input="changeUpdateButton"/>
                 </div>
                 <div class="form-item">
                     <span>昵称：</span>
-                    <el-input v-model="infoFrom.name" suffix-icon="el-icon-user"/>
+                    <el-input v-model="infoFrom.name" suffix-icon="el-icon-user" @input="changeUpdateButton"/>
                 </div>
                 <div class="form-item">
                     <span>地址：</span>
-                    <el-input v-model="infoFrom.address" suffix-icon="el-icon-school"/>
+                    <el-input v-model="infoFrom.address" suffix-icon="el-icon-school" @input="changeUpdateButton"/>
                 </div>
                 <div class="form-item">
-                    <el-button size="medium" type="warning" @click="update" plain>修改</el-button>
+                    <el-button size="medium" type="warning" @click="update" plain :disabled="updateButton">修改
+                    </el-button>
                 </div>
             </el-dialog>
         </div>
@@ -141,7 +142,8 @@
                     address: ''
                 },
                 total: 0,
-                page: 1
+                page: 1,
+                updateButton: true
             }
         },
         created() {
@@ -224,11 +226,11 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        admin({userId:row.id}).then(res => {
-                            if(res.code === 1){
+                        admin({userId: row.id}).then(res => {
+                            if (res.code === 1) {
                                 this.$message.success('设置管理员成功');
                                 this.load();
-                            }else this.$message.error('设置管理员失败');
+                            } else this.$message.error('设置管理员失败');
                         })
                     }).catch(() => {
                     });
@@ -242,6 +244,9 @@
                 this.users = findAll({pageNo: current}).then(res => {
                     this.users = res.data.list;
                 })
+            },
+            changeUpdateButton() {
+                this.updateButton = false
             }
         }
     }

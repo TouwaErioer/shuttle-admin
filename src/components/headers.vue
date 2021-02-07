@@ -42,7 +42,7 @@
             },
             getUser(){
                 const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-                return userInfo.name[0]
+                return userInfo.name
             }
         }
     }
