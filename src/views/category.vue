@@ -17,16 +17,14 @@
                         label="名称"
                         align="center">
                     <template slot-scope="scope">
-                        <el-tag v-text="scope.row.name"/>
+                        <el-tag v-text="scope.row.name" effect="dark"/>
                     </template>
                 </el-table-column>
                 <el-table-column
                         label="服务"
                         align="center">
                     <template slot-scope="scope">
-                        <div class="color" :style="'background-color:' + scope.row.service.color">
-                            <span v-text="scope.row.service.name"/>
-                        </div>
+                        <el-tag v-text="scope.row.service.name" :color="scope.row.service.color" style="color: white"/>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -65,16 +63,17 @@
                 </div>
                 <div class="form-item">
                     <span>名称：</span>
-                    <el-input v-model="updateFrom.name" suffix-icon="el-icon-tickets"/>
+                    <el-input v-model="updateFrom.name" suffix-icon="el-icon-tickets" @input="changeUpdateButton"/>
                 </div>
                 <div class="form-item">
                     <span>服务：</span>
-                    <el-select v-model="updateFrom.serviceId" placeholder="请选择服务">
+                    <el-select v-model="updateFrom.serviceId" placeholder="请选择服务" @change="changeUpdateButton">
                         <el-option v-for="service in services" :key="service.id" :label="service.name" :value="service.id"/>
                     </el-select>
                 </div>
                 <div class="form-item">
-                    <el-button size="medium" type="warning" @click="update" plain>修改</el-button>
+                    <el-button size="medium" type="warning" @click="update" plain :disabled="updateButton">修改
+                    </el-button>
                 </div>
             </el-dialog>
         </div>
@@ -105,6 +104,7 @@
                 total: 0,
                 page: 1,
                 services: [],
+                updateButton: true
             }
         },
         created() {
@@ -178,6 +178,9 @@
                 findAllService({pageNo:1}).then(res => {
                     this.services = res.data.list
                 })
+            },
+            changeUpdateButton() {
+                this.updateButton = false
             }
         }
     }
