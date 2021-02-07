@@ -13,28 +13,39 @@
                         align="center">
                 </el-table-column>
                 <el-table-column
+                        label="图片"
+                        align="center">
+                    <template slot-scope="scope">
+                        <el-image :src="scope.row.image" :previewSrcList="[scope.row.image]"
+                                  class="image"/>
+                    </template>
+                </el-table-column>
+                <el-table-column
                         prop="name"
                         label="名称"
                         align="center">
                     <template slot-scope="scope">
-                        <el-tag v-text="scope.row.name"/>
+                        <el-button v-text="scope.row.name" type="info" size="mini"/>
                     </template>
                 </el-table-column>
                 <el-table-column
-                        label="图片"
+                        label="商店"
                         align="center">
                     <template slot-scope="scope">
-                        <el-image :src="scope.row.image" :previewSrcList="[scope.row.image]" style="width: 100px;height: 100px;"/>
+                        <el-button v-text="scope.row.store.name" type="primary" size="mini"/>
                     </template>
                 </el-table-column>
                 <el-table-column
                         prop="price"
                         label="价格"
                         align="center">
+                    <template slot-scope="scope">
+                        <div v-text="changePrice(scope.row.price)"></div>
+                    </template>
                 </el-table-column>
                 <el-table-column
                         prop="quantity"
-                        label="数量"
+                        label="销量"
                         align="center">
                 </el-table-column>
                 <el-table-column
@@ -48,13 +59,6 @@
                         prop="sales"
                         label="销量"
                         align="center">
-                </el-table-column>
-                <el-table-column
-                        label="商店"
-                        align="center">
-                    <template slot-scope="scope">
-                        <el-tag v-text="scope.row.store.name"/>
-                    </template>
                 </el-table-column>
                 <el-table-column
                         label="操作"
@@ -85,10 +89,6 @@
                     <el-input v-model="insertFrom.price" suffix-icon="el-icon-price-tag"/>
                 </div>
                 <div class="form-item">
-                    <span>数量：</span>
-                    <el-input v-model="insertFrom.quantity" suffix-icon="el-icon-coin"/>
-                </div>
-                <div class="form-item">
                     <span>商店：</span>
                     <el-select v-model="insertFrom.storeId" placeholder="请选择商店">
                         <el-option v-for="store in stores" :key="store.id" :label="store.name"
@@ -105,44 +105,47 @@
                 </div>
                 <div class="form-item">
                     <span>名称：</span>
-                    <el-input v-model="updateFrom.name" suffix-icon="el-icon-tickets"/>
+                    <el-input v-model="updateFrom.name" suffix-icon="el-icon-tickets" @input="changeUpdateButton"/>
                 </div>
 
                 <div class="form-item">
                     <span>图片：</span>
-                    <el-input v-model="updateFrom.image" suffix-icon="el-icon-tickets"/>
-                </div>
-
-                <div class="form-item">
-                    <span>评分：</span>
-                    <el-input v-model="updateFrom.rate" suffix-icon="el-icon-tickets"/>
+                    <el-input v-model="updateFrom.image" @input="changeUpdateButton">
+                        <div slot="suffix" class="suffix">
+                            <el-link icon="el-icon-picture-outline" :href="updateFrom.image" :underline="false"
+                                     target="_blank"/>
+                        </div>
+                    </el-input>
                 </div>
 
                 <div class="form-item">
                     <span>价格：</span>
-                    <el-input v-model="updateFrom.price" suffix-icon="el-icon-price"/>
-                </div>
-
-                <div class="form-item">
-                    <span>数量：</span>
-                    <el-input v-model="updateFrom.quantity" suffix-icon="el-icon-picture-outline"/>
+                    <el-input v-model="updateFrom.price" suffix-icon="el-icon-price-tag" @input="changeUpdateButton"
+                              placeholder="单位：分"/>
                 </div>
 
                 <div class="form-item">
                     <span>销量：</span>
-                    <el-input v-model="updateFrom.sales" suffix-icon="el-icon-tickets"/>
+                    <el-input v-model="updateFrom.sales" suffix-icon="el-icon-medal" @input="changeUpdateButton"/>
                 </div>
 
                 <div class="form-item">
                     <span>商店：</span>
-                    <el-select v-model="insertFrom.storeId" placeholder="请选择商店">
+                    <el-select v-model="insertFrom.storeId" placeholder="请选择商店" @change="changeUpdateButton">
                         <el-option v-for="store in stores" :key="store.id" :label="store.name"
                                    :value="store.id"/>
                     </el-select>
                 </div>
 
                 <div class="form-item">
-                    <el-button size="medium" type="warning" @click="update" plain>修改</el-button>
+                    <span>评分：</span>
+                    <el-rate v-model="updateFrom.rate" text-color="#ff9900" show-score style="margin-right: 92px"
+                             @change="changeUpdateButton"/>
+                </div>
+
+                <div class="form-item">
+                    <el-button size="medium" type="warning" @click="update" plain :disabled="updateButton">修改
+                    </el-button>
                 </div>
             </el-dialog>
         </div>
@@ -181,6 +184,7 @@
                 total: 0,
                 page: 1,
                 stores: [],
+                updateButton: true
             }
         },
         created() {
@@ -189,7 +193,7 @@
         },
         methods: {
             getData(pageNo) {
-                findAllProduct({pageNo:pageNo}).then(res => {
+                findAllProduct({pageNo: pageNo}).then(res => {
                     let data = res.data;
                     this.products = data.list;
                 })
@@ -215,7 +219,7 @@
                     message: h('p', null, [
                         h('span', null, '此操作将永久删除'),
                         h('span', {style: 'color: #f56c6c'}, row.name),
-                        h('span', null, ', 是否继续?')
+                        h('span', null, '和相关联的订单, 是否继续?')
                     ]),
                     showCancelButton: true,
                     confirmButtonText: '确定',
@@ -258,6 +262,12 @@
                 this.page = current;
                 this.products = this.getData({pageNo: current})
             },
+            changeUpdateButton() {
+                this.updateButton = false
+            },
+            changePrice(price) {
+                return (price / 100).toFixed(1)
+            }
         }
     }
 </script>
@@ -276,8 +286,8 @@
         margin: 10px 0;
     }
 
-    .color {
-        width: 50px;
-        height: 50px;
+    .image{
+        width: 100px;
+        height: 100px;
     }
 </style>
