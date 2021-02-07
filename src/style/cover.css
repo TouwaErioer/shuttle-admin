@@ -51,7 +51,6 @@
     display: flex;
     align-items: center;
     color: white;
-
     justify-content: center;
 }
 
@@ -73,4 +72,12 @@
 
 .form-item .el-radio {
     margin-right: 12px;
+}
+
+.el-input__prefix{
+    display: none;
+}
+
+.el-input--prefix .el-input__inner{
+    padding-left: 15px!important;
 }
