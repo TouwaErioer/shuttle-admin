@@ -134,7 +134,7 @@
                     message: h('p', null, [
                         h('span', null, '此操作将永久删除'),
                         h('span', {style: 'color: #f56c6c'}, row.name),
-                        h('span', null, ', 是否继续?')
+                        h('span', null, '和相关数据, 是否继续?')
                     ]),
                     showCancelButton: true,
                     confirmButtonText: '确定',
