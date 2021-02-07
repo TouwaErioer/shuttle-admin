@@ -17,7 +17,7 @@
                         label="名称"
                         align="center">
                     <template slot-scope="scope">
-                        <el-tag v-text="scope.row.name"/>
+                        <el-tag v-text="scope.row.name" effect="dark"/>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -25,7 +25,7 @@
                         label="颜色"
                         align="center">
                     <template slot-scope="scope">
-                        <div class="color" :style="'background-color:' + scope.row.color"></div>
+                        <el-tag :color="scope.row.color" style="color: white">颜色</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -60,7 +60,8 @@
                     <span>图标：</span>
                     <el-input v-model="insertFrom.icon" placeholder="请输入element icon类名">
                         <div slot="suffix" class="suffix">
-                            <el-link icon="el-icon-link" :underline="false" href="https://element.eleme.io/#/zh-CN/component/icon" target="_blank"/>
+                            <el-link icon="el-icon-link" :underline="false"
+                                     href="https://element.eleme.io/#/zh-CN/component/icon" target="_blank"/>
                         </div>
                     </el-input>
                 </div>
@@ -78,22 +79,24 @@
                 </div>
                 <div class="form-item">
                     <span>名称：</span>
-                    <el-input v-model="updateFrom.name" suffix-icon="el-icon-tickets"/>
+                    <el-input v-model="updateFrom.name" suffix-icon="el-icon-tickets" @input="changeUpdateButton"/>
                 </div>
                 <div class="form-item">
                     <span>图标：</span>
-                    <el-input v-model="updateFrom.icon" placeholder="请输入element icon类名">
+                    <el-input v-model="updateFrom.icon" placeholder="请输入element icon类名" @input="changeUpdateButton">
                         <div slot="suffix" class="suffix">
-                            <el-link icon="el-icon-link" :underline="false" href="https://element.eleme.io/#/zh-CN/component/icon" target="_blank"/>
+                            <el-link icon="el-icon-link" :underline="false"
+                                     href="https://element.eleme.io/#/zh-CN/component/icon" target="_blank"/>
                         </div>
                     </el-input>
                 </div>
                 <div class="form-item">
                     <span>颜色：</span>
-                    <el-color-picker v-model="updateFrom.color"/>
+                    <el-color-picker v-model="updateFrom.color" @change="changeUpdateButton"/>
                 </div>
                 <div class="form-item">
-                    <el-button size="medium" type="warning" @click="update" plain>修改</el-button>
+                    <el-button size="medium" type="warning" @click="update" plain :disabled="updateButton">修改
+                    </el-button>
                 </div>
             </el-dialog>
         </div>
@@ -125,7 +128,8 @@
                     icon: '',
                 },
                 total: 0,
-                page: 1
+                page: 1,
+                updateButton: true
             }
         },
         created() {
@@ -199,6 +203,9 @@
             currentChange(current) {
                 this.page = current;
                 this.services = this.getData({pageNo: current})
+            },
+            changeUpdateButton() {
+                this.updateButton = false
             }
         }
     }
