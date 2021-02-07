@@ -13,18 +13,32 @@
                         align="center">
                 </el-table-column>
                 <el-table-column
+                        label="图片"
+                        align="center">
+                    <template slot-scope="scope">
+                        <el-image :src="scope.row.image" :previewSrcList="[scope.row.image]" class="image"/>
+                    </template>
+                </el-table-column>
+                <el-table-column
                         prop="name"
                         label="名称"
                         align="center">
                     <template slot-scope="scope">
-                        <el-tag v-text="scope.row.name"/>
+                        <el-button v-text="scope.row.name" type="primary" size="mini"/>
                     </template>
                 </el-table-column>
                 <el-table-column
-                        label="图片"
+                        label="服务"
                         align="center">
                     <template slot-scope="scope">
-                        <el-image :src="scope.row.image" :previewSrcList="[scope.row.image]"/>
+                        <el-button v-text="scope.row.service.name" type="success" size="mini"/>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        label="类别"
+                        align="center">
+                    <template slot-scope="scope">
+                        <el-button v-text="scope.row.category.name" type="info" size="mini"/>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -38,22 +52,6 @@
                         prop="sales"
                         label="销量"
                         align="center">
-                </el-table-column>
-                <el-table-column
-                        label="服务"
-                        align="center">
-                    <template slot-scope="scope">
-                        <div class="color" :style="'background-color:' + scope.row.service.color">
-                            <span v-text="scope.row.service.name"/>
-                        </div>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        label="类别"
-                        align="center">
-                    <template slot-scope="scope">
-                        <span v-text="scope.row.category.name"/>
-                    </template>
                 </el-table-column>
                 <el-table-column
                         label="操作"
@@ -103,27 +101,27 @@
                 </div>
                 <div class="form-item">
                     <span>名称：</span>
-                    <el-input v-model="updateFrom.name" suffix-icon="el-icon-tickets"/>
+                    <el-input v-model="updateFrom.name" suffix-icon="el-icon-tickets" @input="changeUpdateButton"/>
                 </div>
 
                 <div class="form-item">
                     <span>图片：</span>
-                    <el-input v-model="updateFrom.image" suffix-icon="el-icon-tickets"/>
+                    <el-input v-model="updateFrom.image" suffix-icon="el-icon-tickets" @input="changeUpdateButton"/>
                 </div>
 
                 <div class="form-item">
                     <span>评分：</span>
-                    <el-input v-model="updateFrom.rate" suffix-icon="el-icon-tickets"/>
+                    <el-input v-model="updateFrom.rate" suffix-icon="el-icon-tickets" @change="changeUpdateButton"/>
                 </div>
 
                 <div class="form-item">
                     <span>销量：</span>
-                    <el-input v-model="updateFrom.sales" suffix-icon="el-icon-tickets"/>
+                    <el-input v-model="updateFrom.sales" suffix-icon="el-icon-tickets" @input="changeUpdateButton"/>
                 </div>
 
                 <div class="form-item">
                     <span>服务：</span>
-                    <el-select v-model="updateFrom.serviceId" placeholder="请选择服务">
+                    <el-select v-model="updateFrom.serviceId" placeholder="请选择服务" @change="changeUpdateButton">
                         <el-option v-for="service in services" :key="service.id" :label="service.name"
                                    :value="service.id"/>
                     </el-select>
@@ -131,14 +129,15 @@
 
                 <div class="form-item">
                     <span>类别：</span>
-                    <el-select v-model="updateFrom.categoryId" placeholder="请选择类别">
+                    <el-select v-model="updateFrom.categoryId" placeholder="请选择类别" @change="changeUpdateButton">
                         <el-option v-for="category in categories" :key="category.id" :label="category.name"
                                    :value="category.id"/>
                     </el-select>
                 </div>
 
                 <div class="form-item">
-                    <el-button size="medium" type="warning" @click="update" plain>修改</el-button>
+                    <el-button size="medium" type="warning" @click="update" plain :disabled="updateButton">修改
+                    </el-button>
                 </div>
             </el-dialog>
         </div>
@@ -176,7 +175,8 @@
                 total: 0,
                 page: 1,
                 services: [],
-                categories: []
+                categories: [],
+                updateButton: true
             }
         },
         created() {
@@ -258,6 +258,9 @@
                 this.page = current;
                 this.services = this.getData({pageNo: current})
             },
+            changeUpdateButton() {
+                this.updateButton = false
+            }
         }
     }
 </script>
@@ -276,8 +279,8 @@
         margin: 10px 0;
     }
 
-    .color {
-        width: 50px;
-        height: 50px;
+    .image {
+        width: 100px;
+        height: 100px;
     }
 </style>
