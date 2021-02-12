@@ -8,7 +8,7 @@ let loadingInstance = null     // 加载全局的loading
 
 const instance = axios.create({
     timeout: 10000, // 设置超时时间10s
-    baseURL: 'http://127.0.0.1:8081' //根据配置的反向代理去设置不同环境的baeUrl
+    baseURL: '/api' //根据配置的反向代理去设置不同环境的baeUrl
 })
 
 // instance.defaults.headers.post['Content-Type'] = 'application/json'
