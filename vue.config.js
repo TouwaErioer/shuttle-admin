@@ -6,7 +6,10 @@ module.exports = {
             // detail: https://cli.vuejs.org/config/#devserver-proxy
             "/api": {
                 target: process.env.target,
-                changeOrigin: true
+                changeOrigin: true,
+                pathRewrite: {
+                    "^/api": ''
+                }
             }
         },
     }
