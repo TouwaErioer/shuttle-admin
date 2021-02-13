@@ -44,11 +44,6 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                        prop="quantity"
-                        label="销量"
-                        align="center">
-                </el-table-column>
-                <el-table-column
                         label="评分"
                         align="center">
                     <template slot-scope="scope">
@@ -120,8 +115,7 @@
 
                 <div class="form-item">
                     <span>价格：</span>
-                    <el-input v-model="updateFrom.price" suffix-icon="el-icon-price-tag" @input="changeUpdateButton"
-                              placeholder="单位：分"/>
+                    <el-input v-model="updateFrom.price" suffix-icon="el-icon-price-tag" @input="changeUpdateButton"/>
                 </div>
 
                 <div class="form-item">
@@ -177,7 +171,6 @@
                     name: '',
                     image: null,
                     price: null,
-                    quantity: null,
                     rate: null,
                     sales: null,
                     storeId: null
@@ -208,6 +201,7 @@
                 if (!Object.values(this.insertFrom).every(v => !!v)) {
                     this.$message.error('不能有选项为空')
                 } else {
+                    this.insertFrom.price = this.insertFrom.price * 100;
                     insertProduct(this.insertFrom).then(res => {
                         if (res.code === 1) {
                             this.$message.success('添加成功');
@@ -243,8 +237,10 @@
             },
             update() {
                 if (!Object.values(this.updateFrom).every(v => !!v)) {
-                    this.$message.error('不能有选项为空')
+                    this.$message.error('不能有选项为空');
+                    console.log(this.updateFrom)
                 } else {
+                    this.updateFrom.price = this.updateFrom.price * 100;
                     updateProduct(this.updateFrom).then(res => {
                         if (res.code === 1) {
                             this.$message.success('更新成功');
@@ -262,7 +258,6 @@
                 this.updateFrom.image = row.image;
                 this.updateFrom.sales = row.sales;
                 this.updateFrom.price = row.price;
-                this.updateFrom.quantity = row.quantity;
                 this.updateFrom.storeId = row.storeId;
             },
             load() {
