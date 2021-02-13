@@ -181,8 +181,14 @@
         },
         created() {
             this.getData();
-            this.getService();
-            this.getCategories()
+
+            const categories = sessionStorage.getItem('categories');
+            if (categories === null) this.getCategories();
+            else this.categories = JSON.parse(categories);
+
+            const services = sessionStorage.getItem('services');
+            if (services === null) this.getService();
+            else this.services = JSON.parse(services);
         },
         methods: {
             getData() {

@@ -24,7 +24,8 @@
                         label="服务"
                         align="center">
                     <template slot-scope="scope" v-if="categories.length != 0">
-                        <el-tag v-text="scope.row.services.name" :color="scope.row.services.color" style="color: white"/>
+                        <el-tag v-text="scope.row.services.name" :color="scope.row.services.color"
+                                style="color: white"/>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -50,7 +51,8 @@
                 <div class="form-item">
                     <span>服务：</span>
                     <el-select v-model="insertFrom.serviceId" placeholder="请选择服务">
-                        <el-option v-for="service in services" :key="service.id" :label="service.name" :value="service.id"/>
+                        <el-option v-for="service in services" :key="service.id" :label="service.name"
+                                   :value="service.id"/>
                     </el-select>
                 </div>
                 <div class="form-item">
@@ -68,7 +70,8 @@
                 <div class="form-item">
                     <span>服务：</span>
                     <el-select v-model="updateFrom.serviceId" placeholder="请选择服务" @change="changeUpdateButton">
-                        <el-option v-for="service in services" :key="service.id" :label="service.name" :value="service.id"/>
+                        <el-option v-for="service in services" :key="service.id" :label="service.name"
+                                   :value="service.id"/>
                     </el-select>
                 </div>
                 <div class="form-item">
@@ -108,14 +111,21 @@
             }
         },
         created() {
-            this.getData();
-            this.getService();
+
+            const categories = sessionStorage.getItem('categories');
+            if (categories === null) this.getData();
+            else this.categories = JSON.parse(categories);
+
+            const services = sessionStorage.getItem('services');
+            if (services === null) this.getService();
+            else this.services = JSON.parse(services);
         },
         methods: {
             getData() {
                 findAllCategory().then(res => {
                     let data = res.data;
                     this.categories = data;
+                    sessionStorage.setItem('categories', JSON.stringify(data))
                 })
             },
             insert() {
@@ -181,8 +191,8 @@
                 this.page = current;
                 this.services = this.getData({pageNo: current})
             },
-            getService(){
-                findAllService({pageNo:1}).then(res => {
+            getService() {
+                findAllService({pageNo: 1}).then(res => {
                     this.services = res.data.list
                 })
             },
@@ -207,7 +217,7 @@
         margin: 10px 0;
     }
 
-    .color{
+    .color {
         width: 50px;
         height: 50px;
     }

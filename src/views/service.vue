@@ -133,7 +133,9 @@
             }
         },
         created() {
-            this.getData(1)
+            const services = sessionStorage.getItem('services');
+            if (services === null) this.getData(1);
+            else this.services = JSON.parse(services)
         },
         methods: {
             getData(pageNo) {
@@ -141,6 +143,7 @@
                     let data = res.data;
                     this.services = data.list;
                     this.total = data.total;
+                    sessionStorage.setItem('services', JSON.stringify(data.list));
                 })
             },
             insert() {
