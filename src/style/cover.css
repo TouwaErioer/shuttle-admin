@@ -8,7 +8,7 @@
 }
 
 .insert {
-    margin: 0 10px;
+    margin: unset;
     display: flex;
 }
 

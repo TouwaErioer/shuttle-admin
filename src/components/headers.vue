@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="edge">
-            <el-button :icon="getCollapseIcon" @click="changeCollapse"/>
+<!--            <el-button :icon="getCollapseIcon" @click="changeCollapse"/>-->
             <slot name="insert"/>
         </div>
         <div class="user">
