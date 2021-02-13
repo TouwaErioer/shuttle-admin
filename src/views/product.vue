@@ -131,7 +131,7 @@
 
                 <div class="form-item">
                     <span>商店：</span>
-                    <el-select v-model="insertFrom.storeId" placeholder="请选择商店" @change="changeUpdateButton">
+                    <el-select v-model="updateFrom.storeId" placeholder="请选择商店" @change="changeUpdateButton">
                         <el-option v-for="store in stores" :key="store.id" :label="store.name"
                                    :value="store.id"/>
                     </el-select>
@@ -169,7 +169,7 @@
                     name: '',
                     image: null,
                     price: null,
-                    quantity: null,
+                    quantity: 0,
                     storeId: null,
                 },
                 updateFrom: {
