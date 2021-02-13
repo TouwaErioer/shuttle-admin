@@ -239,13 +239,17 @@
                 });
             },
             update() {
-                updateStore(this.updateFrom).then(res => {
-                    if (res.code === 1) {
-                        this.$message.success('更新成功');
-                        this.load();
-                    } else this.$message.error('更新失败');
-                });
-                this.dialogUpdateVisible = false;
+                if (!Object.values(this.updateFrom).every(v => !!v)) {
+                    this.$message.error('不能有选项为空')
+                } else {
+                    updateStore(this.updateFrom).then(res => {
+                        if (res.code === 1) {
+                            this.$message.success('更新成功');
+                            this.load();
+                        } else this.$message.error('更新失败');
+                    });
+                    this.dialogUpdateVisible = false;
+                }
             },
             clickUpdate(row) {
                 this.dialogUpdateVisible = true;
