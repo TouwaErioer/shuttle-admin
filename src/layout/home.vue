@@ -9,27 +9,27 @@
                 router
                 :collapse="$store.state.collapse"
                 class="el-menu-vertical">
-            <el-menu-item index="user">
+            <el-menu-item index="/user">
                 <i class="el-icon-user"></i>
                 <span slot="title">用户</span>
             </el-menu-item>
-            <el-menu-item index="service">
+            <el-menu-item index="/service">
                 <i class="el-icon-folder"></i>
                 <span slot="title">服务</span>
             </el-menu-item>
-            <el-menu-item index="category">
+            <el-menu-item index="/category">
                 <i class="el-icon-menu"></i>
                 <span slot="title">分类</span>
             </el-menu-item>
-            <el-menu-item index="store">
+            <el-menu-item index="/store">
                 <i class="el-icon-shopping-cart-1"></i>
                 <span slot="title">商店</span>
             </el-menu-item>
-            <el-menu-item index="product">
+            <el-menu-item index="/product">
                 <i class="el-icon-goods"></i>
                 <span slot="title">产品</span>
             </el-menu-item>
-            <el-menu-item index="order">
+            <el-menu-item index="/order">
                 <i class="el-icon-tickets"></i>
                 <span slot="title">订单</span>
             </el-menu-item>
@@ -45,7 +45,7 @@
         name: "home",
         data(){
             return{
-                activeIndex: 'user'
+                activeIndex: this.$route.path,
             }
         }
     }
