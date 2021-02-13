@@ -1,27 +1,30 @@
 import {get, post, del} from '@/utils/request'
 
-const api = '/user/';
+const API = '/user/';
 
 // 登录
-export const login = (params) => post(api + 'login', params);
+export const login = (params) => post(API + 'login', params);
 
 // 注册
-export const register = (params) => post(api + 'register', params);
+export const register = (params) => post(API + 'register', params);
 
 // 检查
-export const check = () => get(api + 'check');
+export const check = () => get(API + 'check');
 
 // 删除用户
-export const deleteUser = (params) => del(api + 'delete', params);
+export const deleteUser = (params) => del(API + 'delete', params);
 
 // 更新用户资料
-export const update = (params) => post(api + 'update', params);
+export const update = (params) => post(API + 'update', params);
 
 // 查询全部用户
-export const findAll = (params) => get(api + 'findAll?' + 'pageNo=' + params.pageNo);
+export const findAll = (params) => get(API + 'findAll?' + 'pageNo=' + params.pageNo);
 
 // 搜索
-export const search = (params) => post(api + 'search', params);
+export const search = (params) => post(API + 'search', params);
 
 // 设置管理员
-export const admin = (params) => post(api + 'admin', params);
+export const admin = (params) => post(API + 'admin', params);
+
+// 根据id查询用户
+export const findUserById = (params) => get(API + 'findById/' + params);
