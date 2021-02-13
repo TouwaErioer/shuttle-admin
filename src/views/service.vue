@@ -154,6 +154,7 @@
                         if (res.code === 1) {
                             this.$message.success('添加成功');
                             this.load();
+                            localStorage.removeItem('services');
                         } else this.$message.error('添加失败');
                     });
                     this.dialogFormVisible = false;
@@ -177,6 +178,7 @@
                             if (res.code === 1) {
                                 this.$message.success('删除成功');
                                 this.load();
+                                localStorage.removeItem('services');
                             } else this.$message.error('添加失败');
                         });
                     }
@@ -187,6 +189,7 @@
                 updateService(this.updateFrom).then(res => {
                     if (res.code === 1) {
                         this.$message.success('更新成功');
+                        localStorage.removeItem('services');
                         this.load();
                     } else this.$message.error('更新失败');
                 });
