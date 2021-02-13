@@ -31,7 +31,7 @@
                         label="服务"
                         align="center">
                     <template slot-scope="scope">
-                        <el-button v-text="scope.row.service.name" type="success" size="mini"/>
+                        <el-button v-text="scope.row.services.name" type="success" size="mini"/>
                     </template>
                 </el-table-column>
                 <el-table-column

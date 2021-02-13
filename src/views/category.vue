@@ -23,8 +23,8 @@
                 <el-table-column
                         label="服务"
                         align="center">
-                    <template slot-scope="scope">
-                        <el-tag v-text="scope.row.service.name" :color="scope.row.service.color" style="color: white"/>
+                    <template slot-scope="scope" v-if="categories.length != 0">
+                        <el-tag v-text="scope.row.services.name" :color="scope.row.services.color" style="color: white"/>
                     </template>
                 </el-table-column>
                 <el-table-column
