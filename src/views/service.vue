@@ -144,13 +144,17 @@
                 })
             },
             insert() {
-                insertService(this.insertFrom).then(res => {
-                    if (res.code === 1) {
-                        this.$message.success('添加成功');
-                        this.load();
-                    } else this.$message.error('添加失败');
-                });
-                this.dialogFormVisible = false;
+                if (!Object.values(this.insertFrom).every(v => !!v)) {
+                    this.$message.error('不能有选项为空')
+                } else {
+                    insertService(this.insertFrom).then(res => {
+                        if (res.code === 1) {
+                            this.$message.success('添加成功');
+                            this.load();
+                        } else this.$message.error('添加失败');
+                    });
+                    this.dialogFormVisible = false;
+                }
             },
             del(row) {
                 const h = this.$createElement;
@@ -225,7 +229,7 @@
         margin: 10px 0;
     }
 
-    .suffix{
+    .suffix {
         display: flex;
         justify-content: center;
         align-items: center;
