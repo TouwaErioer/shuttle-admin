@@ -258,6 +258,8 @@
                 this.updateFrom.rate = row.rate;
                 this.updateFrom.image = row.image;
                 this.updateFrom.sales = row.sales;
+                this.updateFrom.serviceId = row.serviceId;
+                this.updateFrom.categoryId = row.categoryId;
             },
             load() {
                 this.services = this.getData(this.page)

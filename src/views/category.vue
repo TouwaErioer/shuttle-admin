@@ -172,8 +172,7 @@
                 this.dialogUpdateVisible = true;
                 this.updateFrom.id = row.id;
                 this.updateFrom.name = row.name;
-                this.updateFrom.color = row.color;
-                this.updateFrom.icon = row.icon;
+                this.updateFrom.serviceId = row.serviceId;
             },
             load() {
                 this.services = this.getData(this.page)

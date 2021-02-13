@@ -262,6 +262,7 @@
                 this.updateFrom.sales = row.sales;
                 this.updateFrom.price = row.price;
                 this.updateFrom.quantity = row.quantity;
+                this.updateFrom.storeId = row.storeId;
             },
             load() {
                 this.products = this.getData(this.page)
