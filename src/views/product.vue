@@ -126,7 +126,8 @@
 
                 <div class="form-item">
                     <span>销量：</span>
-                    <el-input v-model="updateFrom.sales" suffix-icon="el-icon-medal" @input="changeUpdateButton"/>
+                    <el-input v-model="updateFrom.sales" suffix-icon="el-icon-medal" @input="changeUpdateButton"
+                              type="number"/>
                 </div>
 
                 <div class="form-item">

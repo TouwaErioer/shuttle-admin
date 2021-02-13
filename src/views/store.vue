@@ -106,17 +106,14 @@
 
                 <div class="form-item">
                     <span>图片：</span>
-                    <el-input v-model="updateFrom.image" suffix-icon="el-icon-tickets" @input="changeUpdateButton"/>
-                </div>
-
-                <div class="form-item">
-                    <span>评分：</span>
-                    <el-input v-model="updateFrom.rate" suffix-icon="el-icon-tickets" @change="changeUpdateButton"/>
+                    <el-input v-model="updateFrom.image" suffix-icon="el-icon-picture-outline"
+                              @input="changeUpdateButton"/>
                 </div>
 
                 <div class="form-item">
                     <span>销量：</span>
-                    <el-input v-model="updateFrom.sales" suffix-icon="el-icon-tickets" @input="changeUpdateButton"/>
+                    <el-input v-model="updateFrom.sales" suffix-icon="el-icon-medal" @input="changeUpdateButton"
+                              type="number"/>
                 </div>
 
                 <div class="form-item">
@@ -133,6 +130,12 @@
                         <el-option v-for="category in categories" :key="category.id" :label="category.name"
                                    :value="category.id"/>
                     </el-select>
+                </div>
+
+                <div class="form-item">
+                    <span>评分：</span>
+                    <el-rate v-model="updateFrom.rate" text-color="#ff9900" show-score style="margin-right: 92px"
+                             @change="changeUpdateButton"/>
                 </div>
 
                 <div class="form-item">

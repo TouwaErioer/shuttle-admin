@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-item">
                     <span>电话：</span>
-                    <el-input v-model="userFrom.phone" suffix-icon="el-icon-phone"/>
+                    <el-input v-model="userFrom.phone" suffix-icon="el-icon-phone" type="number"/>
                 </div>
                 <div class="form-item">
                     <span>昵称：</span>
