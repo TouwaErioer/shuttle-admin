@@ -13,37 +13,31 @@
                 <el-table-column
                         prop="id"
                         label="id"
-                        width="180"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="name"
                         label="昵称"
-                        width="180"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="phone"
                         label="电话"
-                        width="180"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="address"
                         label="地址"
-                        width="180"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="score"
                         label="点数"
-                        width="180"
                         align="center">
                 </el-table-column>
                 <el-table-column
                         prop="admin"
                         label="用户组"
-                        width="180"
                         align="center">
                     <template slot-scope="scope">
                         <el-tag v-text="scope.row['admin']?'管理员':'用户'" :type="scope.row['admin']?'success':''"
