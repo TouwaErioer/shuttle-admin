@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import {check} from "@/utils/api/user";
 
 Vue.use(VueRouter);
 
@@ -52,13 +51,14 @@ router.beforeEach((to, from, next) => {
             if (to.path !== '/login') next({path: '/login'});
             else next()
         } else {
-            check().then(res => {
-                if (res.code === 1) next();
-                else {
-                    localStorage.removeItem('token');
-                    next({path: '/login'})
-                }
-            })
+            // check().then(res => {
+            //     if (res.code === 1) next();
+            //     else {
+            //         localStorage.removeItem('token');
+            //         next({path: '/login'})
+            //     }
+            // })
+            next();
         }
     }
 );

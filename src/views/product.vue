@@ -61,7 +61,7 @@
                         align="center">
                     <template slot-scope="scope">
                         <el-button type="warning" size="mini" @click="clickUpdate(scope.row)">修改</el-button>
-                        <el-button type="danger" size="mini" @click="del(scope.row)">删除</el-button>
+                        <el-button type="danger" size="mini" @click="del(scope.row)" disabled>删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -257,7 +257,7 @@
                 this.updateFrom.rate = row.rate;
                 this.updateFrom.image = row.image;
                 this.updateFrom.sales = row.sales;
-                this.updateFrom.price = row.price;
+                this.updateFrom.price = this.changePrice(row.price);
                 this.updateFrom.storeId = row.storeId;
             },
             load() {

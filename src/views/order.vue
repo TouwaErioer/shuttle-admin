@@ -304,7 +304,7 @@
                 this.$msgbox({
                     title: '提示',
                     message: h('p', null, [
-                        h('span', null, '此操作将永久删除订单号'),
+                        h('span', null, '此操作将永久删除订单'),
                         h('span', {style: 'color: #f56c6c'}, row.id),
                         h('span', null, ', 是否继续?')
                     ]),

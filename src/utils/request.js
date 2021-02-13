@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {Loading, Message} from 'element-ui'
-import router from 'vue-router'
+import router from '@/router/index'
 
 import qs from "qs"
 
@@ -19,7 +19,7 @@ instance.defaults.headers.delete['Content-Type'] = 'application/x-www-form-urlen
 
 let httpCode = {
     400: '请求参数错误',
-    401: '权限不足, 请重新登录',
+    401: 'token过期, 请重新登录',
     403: '服务器拒绝本次访问',
     404: '请求资源未找到',
     500: '内部服务器错误',
@@ -65,10 +65,9 @@ instance.interceptors.response.use(response => {
             message: tips,
             type: 'error'
         })
+
         if (error.response.status === 401) {    // token或者登陆失效情况下跳转到登录页面，根据实际情况，在这里可以根据不同的响应错误结果，做对应的事。这里我以401判断为例
-            router.push({
-                path: `/login`
-            })
+            router.push('/login')
         }
         return Promise.reject(error)
     } else {

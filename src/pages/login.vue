@@ -37,7 +37,7 @@
                             localStorage.setItem('userInfo',JSON.stringify(res.data.user));
                             this.$message.success('登录成功');
                             this.$router.push('/')
-                        } else this.$message.error('登录失败')
+                        }
                     })
                 }else{
                     this.$message.info('请输入账号或密码')
