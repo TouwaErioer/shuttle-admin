@@ -50,14 +50,19 @@
                 <el-table-column
                         label="备注"
                         align="center">
-                    <el-button icon="el-icon-notebook-1" size="mini" type="warning" @click="dialogNoteVisible = true"
-                               plain/>
+                    <template slot-scope="scope">
+                        <el-button icon="el-icon-notebook-1" size="mini" type="warning"
+                                   @click="clickNote(scope.row.note)"
+                                   plain/>
+                    </template>
                 </el-table-column>
                 <el-table-column
                         label="文件"
                         align="center">
-                    <el-button icon="el-icon-tickets" size="mini" type="success" @click="dialogFileVisible = true"
-                               plain/>
+                    <template slot-scope="scope">
+                        <el-button icon="el-icon-tickets" size="mini" type="success" @click="clickFile(scope.row.file)"
+                                   plain/>
+                    </template>
                 </el-table-column>
                 <el-table-column
                         prop="status"
@@ -111,36 +116,38 @@
                 <div class="form-item">
                     <span>客户：</span>
                     <el-input v-model="updateFrom.cid" suffix-icon="el-icon-user" @input="changeUpdateButton"
-                              placeholder="请输入客户id"/>
+                              placeholder="请输入客户id" disabled/>
                 </div>
 
                 <div class="form-item">
                     <span>服务：</span>
                     <el-input v-model="updateFrom.sid" suffix-icon="el-icon-user-solid" @input="changeUpdateButton"
-                              placeholder="请输入服务员id"/>
+                              placeholder="请输入服务员id" disabled/>
                 </div>
 
                 <div class="form-item">
                     <span>产品：</span>
                     <el-input v-model="updateFrom.pid" suffix-icon="el-icon-goods" @input="changeUpdateButton"
-                              placeholder="请输入产品id"/>
+                              placeholder="请输入产品id" disabled/>
                 </div>
 
                 <div class="form-item update">
                     <span>状态：</span>
-                    <el-radio v-model="updateFrom.status" :label="-1" @change="changeUpdateButton">未接单</el-radio>
-                    <el-radio v-model="updateFrom.status" :label="0" @change="changeUpdateButton">待配送</el-radio>
-                    <el-radio v-model="updateFrom.status" :label="1" @change="changeUpdateButton">已完成</el-radio>
+                    <el-radio v-model="updateFrom.status" :label="'-1'" @change="changeUpdateButton">未接单</el-radio>
+                    <el-radio v-model="updateFrom.status" :label="'0'" @change="changeUpdateButton">待配送</el-radio>
+                    <el-radio v-model="updateFrom.status" :label="'1'" @change="changeUpdateButton">已完成</el-radio>
                 </div>
 
                 <div class="form-item update">
                     <span>文件：</span>
                     <el-upload
-                            class="upload-demo"
-                            action="https://jsonplaceholder.typicode.com/posts/"
+                            class="upload"
+                            action="/api/file/upload"
                             multiple
                             :limit="3"
-                            :file-list="updateFrom.file !== ''?[{name:'file',url:updateFrom.file}]:[]">
+                            :file-list="updateFrom.file !== null?[{name:updateFrom.file,url:updateFrom.file}]:null"
+                            :on-success="handleResult"
+                            :headers="{Authorization:getToken()}">
                         <el-button size="small" type="primary" class="update-button">点击上传</el-button>
                     </el-upload>
                 </div>
@@ -154,10 +161,10 @@
                 <div slot="title">
                     <span><i class="el-icon-tickets"></i> 文件</span>
                 </div>
-                <div class="form-item" v-if="file != null">
-                    <el-link :href="file">点击下载文件</el-link>
+                <div class="form-item" v-if="file !== null">
+                    <el-link :href="'/api/file/download/' + file">点击下载文件</el-link>
                 </div>
-                <div class="form-item" v-if="file == null">
+                <div class="form-item" v-if="file === null">
                     无
                 </div>
             </el-dialog>
@@ -260,7 +267,7 @@
                     address: null,
                     note: null,
                     file: null,
-                    status: -1
+                    status: '-1'
                 },
                 total: 0,
                 page: 1,
@@ -324,9 +331,6 @@
                 });
             },
             update() {
-                if (!Object.values(this.updateFrom).every(v => !!v)) {
-                    this.$message.error('不能有选项为空')
-                } else {
                     const date = new Date(this.updateFrom.date);
                     this.updateFrom.date = date.toISOString().split('T')[0] + ' '
                         + date.toTimeString().split(' ')[0];
@@ -337,8 +341,6 @@
                         } else this.$message.error('更新失败');
                     });
                     this.dialogUpdateVisible = false;
-                }
-
             },
             clickUpdate(row) {
                 this.dialogUpdateVisible = true;
@@ -350,7 +352,7 @@
                 this.updateFrom.address = row.address;
                 this.updateFrom.note = row.note;
                 this.updateFrom.file = row.file;
-                this.updateFrom.status = row.status;
+                this.updateFrom.status = row.status.toString();
             },
             load() {
                 this.orders = this.getData(this.page)
@@ -414,6 +416,20 @@
             },
             changeUpdateButton() {
                 this.updateButton = false
+            },
+            clickNote(note) {
+                this.dialogNoteVisible = true;
+                this.note = note;
+            },
+            handleResult(response) {
+                this.updateFrom.file = response.data
+            },
+            getToken() {
+                return localStorage.getItem('token')
+            },
+            clickFile(file) {
+                this.dialogFileVisible = true;
+                this.file = file;
             }
         }
     }
@@ -440,5 +456,9 @@
 
     .update {
         margin: 20px 0;
+    }
+
+    .upload {
+        width: 73%
     }
 </style>
