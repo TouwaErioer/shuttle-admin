@@ -254,9 +254,9 @@
                 this.dialogUpdateVisible = true;
                 this.updateFrom.id = row.id;
                 this.updateFrom.name = row.name;
-                this.updateFrom.rate = row.rate;
+                this.updateFrom.rate = row.rate.toString();
                 this.updateFrom.image = row.image;
-                this.updateFrom.sales = row.sales;
+                this.updateFrom.sales = row.sales.toString();
                 this.updateFrom.price = this.changePrice(row.price);
                 this.updateFrom.storeId = row.storeId;
             },
