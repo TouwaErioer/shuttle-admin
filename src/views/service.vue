@@ -42,7 +42,7 @@
                         align="center">
                     <template slot-scope="scope">
                         <el-button type="warning" size="mini" @click="clickUpdate(scope.row)">修改</el-button>
-                        <el-button type="danger" size="mini" @click="del(scope.row)" disabled>删除</el-button>
+                        <el-button type="danger" size="mini" @click="del(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -139,7 +139,7 @@
         },
         methods: {
             getData(pageNo) {
-                findAllService({pageNo: pageNo}).then(res => {
+                findAllService(pageNo).then(res => {
                     let data = res.data;
                     this.services = data.list;
                     this.total = data.total;
