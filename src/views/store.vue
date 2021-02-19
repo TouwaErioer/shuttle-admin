@@ -63,7 +63,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-pagination layout="prev, pager, next" :total="total" :page-size="9" class="pagination"
+            <el-pagination layout="prev, pager, next" :total="total" :page-size="pageSize" class="pagination"
                            @current-change="currentChange"/>
             <el-dialog :visible.sync="dialogFormVisible" width="350px" center>
                 <div slot="title">
@@ -179,7 +179,8 @@
                 page: 1,
                 services: [],
                 categories: [],
-                updateButton: true
+                updateButton: true,
+                pageSize: 3
             }
         },
         created() {
@@ -195,13 +196,14 @@
         },
         methods: {
             getData() {
-                findAllStore().then(res => {
+                findAllStore(this.page, this.pageSize).then(res => {
                     let data = res.data;
                     this.stores = data.list;
+                    this.total = data.total;
                 })
             },
             getCategories() {
-                findAllCategory().then(res => {
+                findAllCategory(1).then(res => {
                     this.categories = res.data
                 })
             },
@@ -271,11 +273,11 @@
                 this.updateFrom.categoryId = row.categoryId;
             },
             load() {
-                this.services = this.getData(this.page)
+                this.getData(this.page, this.pageSize)
             },
             currentChange(current) {
                 this.page = current;
-                this.services = this.getData({pageNo: current})
+                this.getData(current, this.pageSize)
             },
             changeUpdateButton() {
                 this.updateButton = false

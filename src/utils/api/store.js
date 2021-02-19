@@ -8,4 +8,4 @@ export const deleteStore = (params) => del(API + 'delete', params);
 
 export const updateStore = (params) => post(API + 'update', params);
 
-export const findAllStore = () => get(API + 'findAll');
+export const findAllStore = (pageNo,pageSize) => get(API + 'findAll?pageNo=' + pageNo + '&pageSize=' + pageSize);

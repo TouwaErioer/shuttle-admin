@@ -113,7 +113,7 @@
         created() {
 
             const categories = sessionStorage.getItem('categories');
-            if (categories === null) this.getData();
+            if (categories === null) this.getData(1);
             else this.categories = JSON.parse(categories);
 
             const services = sessionStorage.getItem('services');
@@ -121,11 +121,12 @@
             else this.services = JSON.parse(services);
         },
         methods: {
-            getData() {
-                findAllCategory().then(res => {
+            getData(pageNo) {
+                findAllCategory(pageNo).then(res => {
                     let data = res.data;
                     this.categories = data;
-                    sessionStorage.setItem('categories', JSON.stringify(data))
+                    sessionStorage.setItem('categories', JSON.stringify(data));
+                    this.total = data.total;
                 })
             },
             insert() {
@@ -159,7 +160,7 @@
                         deleteCategory({'id': row.id}).then(res => {
                             if (res.code === 1) {
                                 this.$message.success('删除成功');
-                                this.load()
+                                this.load();
                                 sessionStorage.removeItem('categories');
                             } else this.$message.error('添加失败')
                         })
@@ -192,7 +193,7 @@
             },
             currentChange(current) {
                 this.page = current;
-                this.services = this.getData({pageNo: current})
+                this.getData(current)
             },
             getService() {
                 findAllService({pageNo: 1}).then(res => {

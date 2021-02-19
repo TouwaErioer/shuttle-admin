@@ -8,4 +8,4 @@ export const deleteCategory = (params) => del(API + 'delete', params);
 
 export const updateCategory = (params) => post(API + 'update', params);
 
-export const findAllCategory = () => get(API + 'findAll');
+export const findAllCategory = (pageNo) => get(API + 'findAll?pageNo=' + pageNo);

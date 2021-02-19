@@ -304,6 +304,7 @@
                 findAllOrder({pageNo: pageNo}).then(res => {
                     let data = res.data;
                     this.orders = data.list;
+                    this.total = data.total;
                 })
             },
             del(row) {
@@ -358,8 +359,9 @@
                 this.orders = this.getData(this.page)
             },
             currentChange(current) {
+                console.log(current);
                 this.page = current;
-                this.orders = this.getData({pageNo: current})
+                this.orders = this.getData(current);
             },
             changeTime(time) {
                 return new Date(Date.parse(time)).toLocaleDateString()

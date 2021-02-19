@@ -187,13 +187,14 @@
         },
         methods: {
             getData(pageNo) {
-                findAllProduct({pageNo: pageNo}).then(res => {
+                findAllProduct(pageNo).then(res => {
                     let data = res.data;
                     this.products = data.list;
+                    this.total = data.total;
                 })
             },
             getStores() {
-                findAllStore({pageNo: 1}).then(res => {
+                findAllStore(1,9).then(res => {
                     this.stores = res.data.list
                 })
             },
@@ -238,7 +239,6 @@
             update() {
                 if (!Object.values(this.updateFrom).every(v => !!v)) {
                     this.$message.error('不能有选项为空');
-                    console.log(this.updateFrom)
                 } else {
                     this.updateFrom.price = this.updateFrom.price * 100;
                     updateProduct(this.updateFrom).then(res => {
@@ -265,7 +265,7 @@
             },
             currentChange(current) {
                 this.page = current;
-                this.products = this.getData({pageNo: current})
+                this.products = this.getData(current)
             },
             changeUpdateButton() {
                 this.updateButton = false
