@@ -184,6 +184,8 @@
             }
         },
         created() {
+            const tableHeight = parseInt(localStorage.getItem('tableHeight'));
+            this.pageSize = parseInt((tableHeight / 125).toString());
             this.getData();
 
             const categories = sessionStorage.getItem('categories');
@@ -194,6 +196,11 @@
             if (services === null) this.getService();
             else this.services = JSON.parse(services);
         },
+        mounted() {
+            const div = document.getElementsByClassName('table')[0];
+            const tableHeight = window.getComputedStyle(div).getPropertyValue('height');
+            this.pageSize = parseInt((parseInt(tableHeight) / 125).toString());
+        },
         methods: {
             getData() {
                 findAllStore(this.page, this.pageSize).then(res => {
@@ -203,7 +210,7 @@
                 })
             },
             getCategories() {
-                findAllCategory(1).then(res => {
+                findAllCategory(1, 9).then(res => {
                     this.categories = res.data
                 })
             },

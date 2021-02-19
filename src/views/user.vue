@@ -54,7 +54,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-pagination layout="prev, pager, next" :total="total" :page-size="9" class="pagination"
+            <el-pagination layout="prev, pager, next" :total="total" :page-size="pageSize" class="pagination"
                            @current-change="currentChange"/>
             <el-dialog :visible.sync="dialogFormVisible" width="350px" center>
                 <div slot="title">
@@ -137,15 +137,18 @@
                 },
                 total: 0,
                 page: 1,
-                updateButton: true
+                updateButton: true,
+                pageSize: 0
             }
         },
         created() {
+            const tableHeight = parseInt(localStorage.getItem('tableHeight'));
+            this.pageSize = parseInt((tableHeight / 57).toString());
             this.getData(1);
         },
         methods: {
             getData(pageNo) {
-                findAll({pageNo: pageNo}).then(res => {
+                findAll(pageNo, this.pageSize).then(res => {
                     let data = res.data;
                     this.users = data.list;
                     this.total = data.total;

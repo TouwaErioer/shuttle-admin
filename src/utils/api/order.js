@@ -8,4 +8,4 @@ export const deleteOrder = (params) => del(API + 'delete', params);
 
 export const updateOrder = (params) => post(API + 'update', params);
 
-export const findAllOrder = (params) => get(API + 'findAll?' + 'pageNo=' + params.pageNo);
+export const findAllOrder = (pageNo, pageSize) => get(API + 'findAll?' + 'pageNo=' + pageNo + '&pageSize=' + pageSize);

@@ -8,6 +8,6 @@ export const deleteProduct = (params) => del(API + 'delete', params);
 
 export const updateProduct = (params) => post(API + 'update', params);
 
-export const findAllProduct = (pageNo) => get(API + 'findAll?' + 'pageNo=' + pageNo);
+export const findAllProduct = (pageNo, pageSize) => get(API + 'findAll?' + 'pageNo=' + pageNo + '&pageSize=' + pageSize);
 
 export const findProductById = (params) => get(API + 'findById/' + params);

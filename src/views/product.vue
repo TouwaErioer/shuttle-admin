@@ -65,7 +65,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-pagination layout="prev, pager, next" :total="total" :page-size="9" class="pagination"
+            <el-pagination layout="prev, pager, next" :total="total" :page-size="pageSize" class="pagination"
                            @current-change="currentChange"/>
             <el-dialog :visible.sync="dialogFormVisible" width="350px" center>
                 <div slot="title">
@@ -178,16 +178,19 @@
                 total: 0,
                 page: 1,
                 stores: [],
-                updateButton: true
+                updateButton: true,
+                pageSize: 0
             }
         },
         created() {
+            const tableHeight = parseInt(localStorage.getItem('tableHeight'));
+            this.pageSize = parseInt((tableHeight / 125).toString());
             this.getData(1);
             this.getStores();
         },
         methods: {
             getData(pageNo) {
-                findAllProduct(pageNo).then(res => {
+                findAllProduct(pageNo, this.pageSize).then(res => {
                     let data = res.data;
                     this.products = data.list;
                     this.total = data.total;

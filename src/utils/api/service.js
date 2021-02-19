@@ -8,5 +8,5 @@ export const deleteService = (params) => del(API + 'delete', params);
 
 export const updateService = (params) => post(API + 'update', params);
 
-export const findAllService = (params) => get(API + 'findAll?' + 'pageNo=' + params.pageNo);
+export const findAllService = (pageNo) => get(API + 'findAll?' + 'pageNo=' + pageNo);
 

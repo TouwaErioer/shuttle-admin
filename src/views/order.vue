@@ -85,7 +85,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-pagination layout="prev, pager, next" :total="total" :page-size="9" class="pagination"
+            <el-pagination layout="prev, pager, next" :total="total" :page-size="pageSize" class="pagination"
                            @current-change="currentChange"/>
             <el-dialog :visible.sync="dialogUpdateVisible" width="350px" center>
                 <div slot="title">
@@ -293,15 +293,18 @@
                 },
                 updateButton: true,
                 userStatus: false,
-                productStatus: false
+                productStatus: false,
+                pageSize: 8
             }
         },
         created() {
+            const tableHeight = parseInt(localStorage.getItem('tableHeight'));
+            this.pageSize = parseInt((tableHeight / 57).toString());
             this.getData(1);
         },
         methods: {
             getData(pageNo) {
-                findAllOrder({pageNo: pageNo}).then(res => {
+                findAllOrder(pageNo,this.pageSize).then(res => {
                     let data = res.data;
                     this.orders = data.list;
                     this.total = data.total;
@@ -332,16 +335,16 @@
                 });
             },
             update() {
-                    const date = new Date(this.updateFrom.date);
-                    this.updateFrom.date = date.toISOString().split('T')[0] + ' '
-                        + date.toTimeString().split(' ')[0];
-                    updateOrder(this.updateFrom).then(res => {
-                        if (res.code === 1) {
-                            this.$message.success('更新成功');
-                            this.load();
-                        } else this.$message.error('更新失败');
-                    });
-                    this.dialogUpdateVisible = false;
+                const date = new Date(this.updateFrom.date);
+                this.updateFrom.date = date.toISOString().split('T')[0] + ' '
+                    + date.toTimeString().split(' ')[0];
+                updateOrder(this.updateFrom).then(res => {
+                    if (res.code === 1) {
+                        this.$message.success('更新成功');
+                        this.load();
+                    } else this.$message.error('更新失败');
+                });
+                this.dialogUpdateVisible = false;
             },
             clickUpdate(row) {
                 this.dialogUpdateVisible = true;
