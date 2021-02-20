@@ -6,12 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        collapse: false,
-    },
-    getters: {
-        getOrders: (state) => {
-            return state.orders;
-        }
+        collapse: true,
     },
     mutations: {
         changeCollapse(state) {
