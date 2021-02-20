@@ -257,6 +257,8 @@
                 });
             },
             update() {
+                this.updateFrom.rate = (this.updateFrom.rate).toString();
+                this.updateFrom.sales = (this.updateFrom.sales).toString();
                 if (!Object.values(this.updateFrom).every(v => !!v)) {
                     this.$message.error('不能有选项为空')
                 } else {
