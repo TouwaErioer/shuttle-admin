@@ -172,10 +172,10 @@
                 <div slot="title">
                     <span><i class="el-icon-notebook-1"></i> 备注</span>
                 </div>
-                <div class="form-item" v-if="note != null">
+                <div class="form-item" v-if="note !== null">
                     <el-input type="textarea" v-model="note" :rows="3"/>
                 </div>
-                <div class="form-item" v-if="note == null">
+                <div class="form-item" v-if="note === null">
                     无
                 </div>
             </el-dialog>
@@ -244,11 +244,19 @@
 
 <script>
     import Headers from "@/components/headers";
-    import {findAllOrder, deleteOrder, updateOrder} from "@/utils/api/order";
+    import {
+        findAllOrder,
+        deleteOrder,
+        updateOrder,
+        findByReceive,
+        findByCompleted,
+        findByPresent
+    } from "@/utils/api/order";
 
     export default {
         name: "order",
         components: {Headers},
+        props: ['status'],
         data() {
             return {
                 orders: [],
@@ -304,7 +312,7 @@
         },
         methods: {
             getData(pageNo) {
-                findAllOrder(pageNo,this.pageSize).then(res => {
+                findAllOrder(pageNo, this.pageSize).then(res => {
                     let data = res.data;
                     this.orders = data.list;
                     this.total = data.total;
@@ -362,9 +370,11 @@
                 this.orders = this.getData(this.page)
             },
             currentChange(current) {
-                console.log(current);
+                const status = parseInt(this.status);
                 this.page = current;
-                this.orders = this.getData(current);
+                if (status === -1)this.getReceiver(current);
+                else if(status === 1) this.getCompleted(current);
+                else if(status === 2) this.getData(current);
             },
             changeTime(time) {
                 return new Date(Date.parse(time)).toLocaleDateString()
@@ -435,6 +445,42 @@
             clickFile(file) {
                 this.dialogFileVisible = true;
                 this.file = file;
+            },
+            getReceiver(pageNo){
+                findByReceive(pageNo,this.pageSize).then(res => {
+                    if(res.code === 1){
+                        let data = res.data;
+                        this.orders = data.list;
+                        this.total = data.total;
+                    }
+                })
+            },
+            getCompleted(pageNo){
+                findByCompleted(pageNo,this.pageSize).then(res => {
+                    if(res.code === 1){
+                        let data = res.data;
+                        this.orders = data.list;
+                        this.total = data.total;
+                    }
+                })
+            },
+            getPresent(pageNo) {
+                findByPresent(pageNo, this.pageSize).then(res => {
+                    if (res.code === 1) {
+                        let data = res.data;
+                        this.orders = data.list;
+                        this.total = data.total;
+                    }
+                })
+            }
+        },
+        watch: {
+            status() {
+                const status = parseInt(this.status);
+                if (status === -1)this.getReceiver(this.page);
+                else if(status === 0)this.getPresent(this.page);
+                else if(status === 1) this.getCompleted(this.page);
+                else if(status === 2) this.getData(1);
             }
         }
     }
