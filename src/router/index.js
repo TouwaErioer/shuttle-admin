@@ -30,9 +30,18 @@ const routes = [
                 component: () => import("@/views/product")
             },
             {
-                path: 'order',
-                component: () => import("@/views/order")
+                path: 'order/:status',
+                component: () => import("@/views/order"),
+                props: true
             },
+            {
+                path: 'comment',
+                component: () => import("@/views/comment"),
+            },
+            {
+                path: 'ads',
+                component: () => import("@/views/ads"),
+            }
         ]
     }, {
         path: '/login',
