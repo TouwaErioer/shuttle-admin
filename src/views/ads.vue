@@ -64,12 +64,17 @@
 
                 <div class="form-item">
                     <span>图片：</span>
-                    <el-input v-model="insertFrom.image" suffix-icon="el-icon-picture-outline"/>
+                    <el-input v-model="insertFrom.image" suffix-icon="el-icon-picture-outline" placeholder="图片链接"/>
                 </div>
 
                 <div class="form-item">
                     <span>商店：</span>
-                    <el-input v-model="insertFrom.storeId" suffix-icon="el-icon-shopping-cart-1"/>
+                    <el-input v-model="insertFrom.storeId" suffix-icon="el-icon-shopping-cart-1" placeholder="商店id"/>
+                </div>
+
+                <div class="form-item">
+                    <span>过期：</span>
+                    <el-input v-model="insertFrom.expired" type="number" suffix-icon="el-icon-time" placeholder="单位：天"/>
                 </div>
 
                 <div class="form-item">
@@ -170,7 +175,6 @@
                 if (!Object.values(this.insertFrom).every(v => !!v)) {
                     this.$message.error('不能有选项为空')
                 } else {
-                    this.insertFrom.expired = 1;
                     insertAds(this.insertFrom).then(res => {
                         if (res.code === 1) {
                             this.$message.success('添加成功！');

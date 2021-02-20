@@ -127,8 +127,8 @@
             getData(pageNo) {
                 findAllCategory(pageNo, this.pageSize).then(res => {
                     let data = res.data;
-                    this.categories = data;
-                    sessionStorage.setItem('categories', JSON.stringify(data));
+                    this.categories = data.list;
+                    sessionStorage.setItem('categories', JSON.stringify(data.list));
                     this.total = data.total;
                 })
             },
@@ -199,7 +199,7 @@
                 this.getData(current)
             },
             getService() {
-                findAllService({pageNo: 1}).then(res => {
+                findAllService(1).then(res => {
                     this.services = res.data.list
                 })
             },
