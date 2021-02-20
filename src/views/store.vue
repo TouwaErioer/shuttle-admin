@@ -215,7 +215,7 @@
                 })
             },
             getService() {
-                findAllService({pageNo: 1}).then(res => {
+                findAllService(1).then(res => {
                     this.services = res.data.list
                 })
             },
