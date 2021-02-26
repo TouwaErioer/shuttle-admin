@@ -164,7 +164,6 @@
                     name: '',
                     image: null,
                     price: null,
-                    quantity: 0,
                     storeId: null,
                 },
                 updateFrom: {

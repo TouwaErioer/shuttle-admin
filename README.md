@@ -1,4 +1,12 @@
-# shuttle-interconnected-admin
+# shuttle后台管理系统
+
+# 依赖
+
+* JavaScript框架：Vue.js
+* UI: Element UI
+* 路由：Vue Router
+* 全局数据管理：Vuex
+* 请求客户端：axios
 
 ## Project setup
 ```
