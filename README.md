@@ -2,11 +2,13 @@
 
 # 依赖
 
-* JavaScript框架：Vue.js
-* UI: Element UI
-* 路由：Vue Router
-* 全局数据管理：Vuex
-* 请求客户端：axios
+| Syntax | Description | Version|
+|  :----: |  :----: | :----: |
+| JavaScript Frame | Vue.js | 2.6.11|
+| UI | Element UI | 2.15.0 |
+| Router | Vue Router | 3.5.1 |
+| Global Data | Vuex | 3.6.2 |
+| Request | axios | 0.21.1 |
 
 ## Project setup
 ```
