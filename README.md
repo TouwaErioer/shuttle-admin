@@ -20,6 +20,7 @@ target=
 ## 部署
 
 ```sh
+# 克隆项目
 git clone https://github.com/TouwaErioer/shuttle-admin.git
 
 cd shuttle-admin
