@@ -22,7 +22,7 @@ target=
 ```sh
 git clone https://github.com/TouwaErioer/shuttle-admin.git
 
-cd shuttle-web
+cd shuttle-admin
 
 # 构建docker镜像
 docker build . -t shuttle-admin
