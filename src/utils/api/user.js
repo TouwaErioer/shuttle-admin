@@ -18,7 +18,7 @@ export const deleteUser = (params) => del(API + 'delete', params);
 export const update = (params) => post(API + 'update', params);
 
 // 查询全部用户
-export const findAll = (pageNo, pageSize) => get(API + 'findAll?' + 'pageNo=' + pageSize + '&pageSize=' + pageSize);
+export const findAll = (pageNo, pageSize) => get(API + 'findAll?' + 'pageNo=' + pageNo + '&pageSize=' + pageSize);
 
 // 搜索
 export const search = (params) => post(API + 'search', params);

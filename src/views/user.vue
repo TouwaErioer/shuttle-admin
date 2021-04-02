@@ -242,7 +242,7 @@
             },
             currentChange(current) {
                 this.page = current;
-                this.users = findAll({pageNo: current}).then(res => {
+                findAll(current, this.pageSize).then(res => {
                     this.users = res.data.list;
                 })
             },
