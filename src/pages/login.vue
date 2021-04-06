@@ -27,8 +27,7 @@
             login() {
                 if (this.user != null && this.password != null) {
                     login({
-                        phone: this.user,
-                        name: this.user,
+                        account: this.user,
                         password: this.password,
                         expired: 60
                     }).then(res => {
