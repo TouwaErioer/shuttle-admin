@@ -1,6 +1,6 @@
 import {del, post, get} from "@/utils/request";
 
-const API = '/poster/';
+const API = '/major/poster/';
 
 export const insertAds = (params) => post(API + 'insert', params);
 

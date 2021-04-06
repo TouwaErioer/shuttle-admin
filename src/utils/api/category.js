@@ -1,6 +1,6 @@
 import {del, post,get} from "@/utils/request";
 
-const API = '/category/';
+const API = '/major/category/';
 
 export const insertCategory = (params) => post(API + 'insert', params);
 

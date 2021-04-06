@@ -1,8 +1,6 @@
 import {del, post, get} from "@/utils/request";
 
-const API = '/order/';
-
-export const insertOrder = (params) => post(API + 'insert', params);
+const API = '/orders/';
 
 export const deleteOrder = (params) => del(API + 'delete', params);
 
