@@ -44,8 +44,9 @@ const routes = [
             }
         ]
     }, {
-        path: '/login',
-        component: () => import("@/pages/login")
+        path: '/login/:token',
+        component: () => import("@/pages/login"),
+        props: true
     }
 ];
 
@@ -57,16 +58,10 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
         const token = localStorage.getItem('token');
         if (!token) {
-            if (to.path !== '/login') next({path: '/login'});
+            console.log(to.path.split('/')[1]);
+            if (to.path.split('/')[1] !== 'login') next({path: '/login/null'});
             else next()
         } else {
-            // check().then(res => {
-            //     if (res.code === 1) next();
-            //     else {
-            //         localStorage.removeItem('token');
-            //         next({path: '/login'})
-            //     }
-            // })
             next();
         }
     }

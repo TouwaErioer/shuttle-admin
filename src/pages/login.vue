@@ -13,14 +13,29 @@
 </template>
 
 <script>
-    import {login} from "@/utils/api/user";
+    import {check, login} from "@/utils/api/user";
 
     export default {
         name: "login",
+        props: {token: String},
         data() {
             return {
                 user: null,
                 password: null
+            }
+        },
+        created() {
+            if (this.token !== 'null') {
+                localStorage.setItem('token', this.token);
+                check().then(res => {
+                    if (res.code === 1) {
+                        localStorage.setItem('userInfo', JSON.stringify(res.data));
+                        this.$message.success('登录成功');
+                        this.$router.push('/')
+                    } else {
+                        localStorage.removeItem('token');
+                    }
+                })
             }
         },
         methods: {
@@ -33,12 +48,12 @@
                     }).then(res => {
                         if (res.code === 1) {
                             localStorage.setItem('token', res.data.token);
-                            localStorage.setItem('userInfo',JSON.stringify(res.data.user));
+                            localStorage.setItem('userInfo', JSON.stringify(res.data.user));
                             this.$message.success('登录成功');
                             this.$router.push('/')
                         }
                     })
-                }else{
+                } else {
                     this.$message.info('请输入账号或密码')
                 }
             }

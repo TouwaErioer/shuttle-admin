@@ -45,7 +45,7 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(response => {
     loadingInstance.close();
     if(response.data.message === 'token过期'){
-        router.replace('/login').then();
+        router.replace('/login/null').then();
     }else if (response.data.code === 1) {
         return Promise.resolve(response.data)
     }else{
