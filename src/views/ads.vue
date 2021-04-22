@@ -44,7 +44,7 @@
                 </div>
                 <div class="form-item">
                     <span>图片：</span>
-                    <el-input v-model="updateFrom.image" suffix-icon="el-icon-picture-outline"/>
+                    <el-input v-model="updateFrom.image" suffix-icon="el-icon-picture-outline" @input="changeData"/>
                 </div>
                 <div class="form-item">
                     <span>商店：</span>
@@ -183,6 +183,9 @@
                         }
                     });
                 }
+            },
+            changeData(value){
+                if(this.updateFrom.image !== value || this.updateFrom.storeId !== value) this.updateButton = false;
             }
         }
     }
