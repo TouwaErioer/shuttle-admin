@@ -16,7 +16,7 @@ const cdn = {
         'https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js',
         'https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js',
         'https://unpkg.com/element-ui/lib/index.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.6/qs.min.js'
+        'https://cdn.jsdelivr.net/npm/qs@6.10.1/dist/qs.js'
     ]
 };
 
