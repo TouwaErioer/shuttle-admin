@@ -196,7 +196,8 @@
                 })
             },
             getStores() {
-                findAllStore(1,9).then(res => {
+                // todo 选择服务再选商店
+                findAllStore(1,20).then(res => {
                     this.stores = res.data.list
                 })
             },

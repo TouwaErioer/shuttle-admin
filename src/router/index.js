@@ -41,6 +41,11 @@ const routes = [
             {
                 path: 'ads',
                 component: () => import("@/views/ads"),
+            },
+            {
+                path: 'approve/:type',
+                component: () => import("@/views/approve"),
+                props: true
             }
         ]
     }, {

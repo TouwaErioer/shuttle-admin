@@ -26,6 +26,11 @@
                         align="center">
                 </el-table-column>
                 <el-table-column
+                        prop="email"
+                        label="邮箱"
+                        align="center">
+                </el-table-column>
+                <el-table-column
                         prop="address"
                         label="地址"
                         align="center">

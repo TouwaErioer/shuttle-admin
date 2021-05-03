@@ -33,7 +33,7 @@
                 <i class="el-icon-goods"></i>
                 <span slot="title">产品</span>
             </el-menu-item>
-            <el-submenu>
+            <el-submenu index="/order">
                 <template slot="title">
                     <i class="el-icon-tickets"></i>
                     <span>订单</span>
@@ -60,9 +60,23 @@
                 <span slot="title">评论</span>
             </el-menu-item>
             <el-menu-item index="/ads">
-                <i class="el-icon-folder    "></i>
+                <i class="el-icon-folder"></i>
                 <span slot="title">广告</span>
             </el-menu-item>
+            <el-submenu index="/approve">
+                <template slot="title">
+                    <i class="el-icon-finished"></i>
+                    <span slot="title">审批</span>
+                </template>
+                <el-menu-item index="/approve/store">
+                    <i class="el-icon-shopping-cart-1"></i>
+                    <span slot="title">商店</span>
+                </el-menu-item>
+                <el-menu-item index="/approve/product">
+                    <i class="el-icon-goods"></i>
+                    <span slot="title">产品</span>
+                </el-menu-item>
+            </el-submenu>
         </el-menu>
         <div class="content" :style="$store.state.collapse?'':'width:Calc(100% - 250px)'">
             <router-view/>
@@ -90,12 +104,12 @@
     }
 
     .content {
-         display: flex;
-         flex-direction: column;
-         height: 100%;
-         width: 100%;
-         background-color: #edeff2;
-     }
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        background-color: #edeff2;
+    }
 
     .el-menu-vertical:not(.el-menu--collapse) {
         width: 250px;
