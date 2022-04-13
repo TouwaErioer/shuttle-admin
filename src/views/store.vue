@@ -189,9 +189,11 @@
             this.getData();
 
             const categories = sessionStorage.getItem('categories');
-            if (categories === null) this.getCategories();
-            else this.categories = JSON.parse(categories);
-
+            if (categories === null) {
+                this.getCategories();
+            } else {
+                this.categories = JSON.parse(categories);
+            }
             const services = sessionStorage.getItem('services');
             if (services === null) this.getService();
             else this.services = JSON.parse(services);
@@ -211,7 +213,7 @@
             },
             getCategories() {
                 findAllCategory(1, 9).then(res => {
-                    this.categories = res.data
+                    this.categories = res.data.list;
                 })
             },
             getService() {
