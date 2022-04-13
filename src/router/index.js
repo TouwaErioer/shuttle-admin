@@ -11,41 +11,68 @@ const routes = [
         children: [
             {
                 path: 'user',
-                component: () => import("@/views/user")
+                component: () => import("@/views/user"),
+                meta: {
+                    title: '用户管理'
+                }
             },
             {
                 path: 'service',
-                component: () => import("@/views/service")
+                component: () => import("@/views/service"),
+                meta: {
+                    title: '业务管理'
+                }
             },
             {
                 path: 'category',
-                component: () => import("@/views/category")
+                component: () => import("@/views/category"),
+                meta: {
+                    title: '类别管理'
+                }
             },
             {
                 path: 'store',
-                component: () => import("@/views/store")
+                component: () => import("@/views/store"),
+                meta: {
+                    title: '商店管理'
+                }
             },
             {
                 path: 'product',
-                component: () => import("@/views/product")
+                component: () => import("@/views/product"),
+                meta: {
+                    title: '产品管理'
+                }
             },
             {
                 path: 'order/:status',
                 component: () => import("@/views/order"),
-                props: true
+                props: true,
+                meta: {
+                    title: '订单管理'
+                }
             },
             {
                 path: 'comment',
                 component: () => import("@/views/comment"),
+                meta: {
+                    title: '评论管理'
+                }
             },
             {
                 path: 'ads',
                 component: () => import("@/views/ads"),
+                meta: {
+                    title: '海报管理'
+                }
             },
             {
                 path: 'approve/:type',
                 component: () => import("@/views/approve"),
-                props: true
+                props: true,
+                meta: {
+                    title: '审批管理'
+                }
             }
         ]
     }, {
@@ -61,6 +88,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+        if (to.meta.title) {
+            document.title = to.meta.title;
+        }
         const token = localStorage.getItem('token');
         if (!token) {
             console.log(to.path.split('/')[1]);
