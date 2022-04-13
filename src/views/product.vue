@@ -197,7 +197,7 @@
             },
             getStores() {
                 // todo 选择服务再选商店
-                findAllStore(1,20).then(res => {
+                findAllStore(1, 30).then(res => {
                     this.stores = res.data.list
                 })
             },
@@ -205,8 +205,9 @@
                 if (!Object.values(this.insertFrom).every(v => !!v)) {
                     this.$message.error('不能有选项为空')
                 } else {
-                    this.insertFrom.price = this.insertFrom.price * 100;
-                    insertProduct(this.insertFrom).then(res => {
+                    let data = Object.assign({}, this.insertFrom);
+                    data.price = this.insertFrom.price * 100;
+                    insertProduct(data).then(res => {
                         if (res.code === 1) {
                             this.$message.success('添加成功');
                             this.load();
