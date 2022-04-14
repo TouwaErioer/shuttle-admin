@@ -46,11 +46,13 @@
                         password: this.password,
                         expired: 60
                     }).then(res => {
-                        if (res.code === 1) {
+                        if (res.code === 1 && res.data.user['admin']) {
                             localStorage.setItem('token', res.data.token);
                             localStorage.setItem('userInfo', JSON.stringify(res.data.user));
                             this.$message.success('登录成功');
                             this.$router.push('/')
+                        } else {
+                            this.$message.error('权限不足')
                         }
                     })
                 } else {

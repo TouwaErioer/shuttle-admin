@@ -93,7 +93,6 @@ router.beforeEach((to, from, next) => {
         }
         const token = localStorage.getItem('token');
         if (!token) {
-            console.log(to.path.split('/')[1]);
             if (to.path.split('/')[1] !== 'login') next({path: '/login/null'});
             else next()
         } else {

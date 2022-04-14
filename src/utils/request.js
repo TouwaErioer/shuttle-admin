@@ -44,15 +44,15 @@ instance.interceptors.request.use(config => {
 /** 添加响应拦截器  **/
 instance.interceptors.response.use(response => {
     loadingInstance.close();
-    if(response.data.message === 'token过期'){
-        router.replace('/login/null').then();
-    }else if (response.data.code === 1) {
-        return Promise.resolve(response.data)
-    }else{
+    let data = response.data;
+    if (data.code === 1 && data.data !== '权限不够') {
+        return Promise.resolve(data)
+    } else {
         Message({
-            message: response.data.message,
+            message: data.message,
             type: 'error'
-        })
+        });
+        router.replace('/login/null').then();
     }
     return Promise.resolve(response.data)
 }, error => {
@@ -92,9 +92,9 @@ export const get = (url, params, config = {}) => {
 
 /* 统一封装post请求  */
 export const post = (url, data, config = {}) => {
-    if(config.headers != null){
+    if (config.headers != null) {
         data = JSON.stringify(data)
-    }else {
+    } else {
         // 注意：由于后端接受类型为 application/x-www-form-urlencoded axios默认请类型为application/json 所以post传参要使用this.$qs.stringify()
         data = qs.stringify(data)
     }
